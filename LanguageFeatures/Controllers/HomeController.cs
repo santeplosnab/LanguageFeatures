@@ -17,10 +17,17 @@ namespace LanguageFeatures.Controllers
                 decimal? price = p?.Price ?? 0;
                 string related = p?.Related?.Name ?? "<None>";
                 bool? inStock = p?.InStock;
-                result.Add($"Name: {name}, Category: {category}, Price: {price}, Related: {related}, In stock: {inStock}");
+                result.Add($"Name: {name}, Category: {category}, Price: {price:C2}, Related: {related}, In stock: {inStock}");
             }
 
-            return View(result);
+            Dictionary<string, Product> products = new Dictionary<string, Product>
+            {
+                ["Kayak"] = new Product {Name = "Kayak", Price = 275M} ,
+                ["Life jacket"] = new Product {Name = "Life jacket", Price = 48.95M}
+            };
+
+
+            return View("Index", products.Keys);
         }
     }
 }
