@@ -26,8 +26,11 @@ namespace LanguageFeatures.Controllers
                 ["Life jacket"] = new Product {Name = "Life jacket", Price = 48.95M}
             };
 
+            ShoppingCart cart = new ShoppingCart { Products = Product.GetProducts() };
 
-            return View("Index", products.Keys);
+            decimal cartTotal = cart.TotalPrices();
+
+            return View("Index", new string[] { $"Total: {cartTotal:C2}" });
         }
     }
 }
