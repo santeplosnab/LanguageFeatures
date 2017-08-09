@@ -17,7 +17,7 @@ namespace LanguageFeatures.Controllers
                 decimal? price = p?.Price ?? 0;
                 string related = p?.Related?.Name ?? "<None>";
                 bool? inStock = p?.InStock;
-                result.Add(string.Format("Name: {0}, Category: {1}, Price: {2}, Related: {3}, In stock: {4}", name, category, price, related, inStock));
+                result.Add($"Name: {name}, Category: {category}, Price: {price}, Related: {related}, In stock: {inStock}");
             }
 
             return View(result);
