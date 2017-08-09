@@ -13,9 +13,11 @@ namespace LanguageFeatures.Controllers
             foreach (Product p in Product.GetProducts())
             {
                 string name = p?.Name ?? "<No Name>";
+                string category = p?.Category;
                 decimal? price = p?.Price ?? 0;
                 string related = p?.Related?.Name ?? "<None>";
-                result.Add(string.Format("Name: {0}, Price: {1}, Related: {2}", name, price, related));
+                bool? inStock = p?.InStock;
+                result.Add(string.Format("Name: {0}, Category: {1}, Price: {2}, Related: {3}, In stock: {4}", name, category, price, related, inStock));
             }
 
             return View(result);
