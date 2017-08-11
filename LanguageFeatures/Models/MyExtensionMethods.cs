@@ -17,11 +17,11 @@ namespace LanguageFeatures.Models
             return total;
         }
 
-        public static IEnumerable<Product> FilterByPrice(
+        public static IEnumerable<Product> Filter(
             this IEnumerable<Product> productEnum,
             Func<Product, bool> selector)
         {
-            foreach(Product prod in productEnum)
+            foreach (Product prod in productEnum)
             {
                 if (selector(prod))
                 {
@@ -30,6 +30,6 @@ namespace LanguageFeatures.Models
             }
         }
 
-     
+
     }
 }

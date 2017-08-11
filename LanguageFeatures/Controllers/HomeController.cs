@@ -9,11 +9,6 @@ namespace LanguageFeatures.Controllers
     {
         public ViewResult Index()
         {
-           bool FilterByPrice(Product p)
-            {
-                return (p?.Price ?? 0) >= 20;
-            }
-
 
             Product[] productArray =
             {
@@ -23,18 +18,14 @@ namespace LanguageFeatures.Controllers
                 new Product {Name = "Corner flag", Price = 34.95M}
             };
 
-            Func<Product, bool> nameFilter = delegate (Product prod)
-            {
-                return prod?.Name?[0] == 'S';
-            };
-
             decimal priceFilterTotal = productArray
-                .FilterByPrice(FilterByPrice)
+                .Filter(p => (p?.Price ?? 0) >= 20)
                 .TotalPrices();
 
             decimal nameFilterTotal = productArray
-                .FilterByPrice(nameFilter)
+                .Filter(p => p?.Name?[0] == 'S')
                 .TotalPrices();
+
 
             return View("Index", new string[]
             {
