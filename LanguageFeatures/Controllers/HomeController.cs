@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using LanguageFeatures.Models;
+using System;
 
 namespace LanguageFeatures.Controllers
 {
@@ -8,27 +9,11 @@ namespace LanguageFeatures.Controllers
     {
         public ViewResult Index()
         {
-            //List<string> result = new List<string>();
+           bool FilterByPrice(Product p)
+            {
+                return (p?.Price ?? 0) >= 20;
+            }
 
-            //foreach (Product p in Product.GetProducts())
-            //{
-            //    string name = p?.Name ?? "<No Name>";
-            //    string category = p?.Category;
-            //    decimal? price = p?.Price ?? 0;
-            //    string related = p?.Related?.Name ?? "<None>";
-            //    bool? inStock = p?.InStock;
-            //    result.Add($"Name: {name}, Category: {category}, Price: {price:C2}, Related: {related}, In stock: {inStock}");
-            //}
-
-            //Dictionary<string, Product> products = new Dictionary<string, Product>
-            //{
-            //    ["Kayak"] = new Product {Name = "Kayak", Price = 275M} ,
-            //    ["Life jacket"] = new Product {Name = "Life jacket", Price = 48.95M}
-            //};
-
-            //decimal cartTotal = cart.TotalPrices();
-
-            //return View("Index", new string[] { $"Total: {cartTotal:C2}" });
 
             Product[] productArray =
             {
@@ -38,10 +23,18 @@ namespace LanguageFeatures.Controllers
                 new Product {Name = "Corner flag", Price = 34.95M}
             };
 
-            ShoppingCart cart = new ShoppingCart { Products = Product.GetProducts() };
+            Func<Product, bool> nameFilter = delegate (Product prod)
+            {
+                return prod?.Name?[0] == 'S';
+            };
 
-            decimal priceFilterTotal = productArray.FilterByPrice(20).TotalPrices();
-            decimal nameFilterTotal = productArray.FilterByName('S').TotalPrices();
+            decimal priceFilterTotal = productArray
+                .FilterByPrice(FilterByPrice)
+                .TotalPrices();
+
+            decimal nameFilterTotal = productArray
+                .FilterByPrice(nameFilter)
+                .TotalPrices();
 
             return View("Index", new string[]
             {
