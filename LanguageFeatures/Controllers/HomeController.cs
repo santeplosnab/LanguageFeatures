@@ -16,7 +16,7 @@ namespace LanguageFeatures.Controllers
                 new Product {Name = "Corner flag", Price = 34.95M}
             };
 
-            return View(products.Select(p => $"Name: {p.Name}, Price: {p.Price}"));
+            return View(products.Select(p => $"{nameof(p.Name)}: {p.Name}, {nameof(p.Price)}: {p.Price}"));
         }
     }
 }
